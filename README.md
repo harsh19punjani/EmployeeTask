@@ -25,3 +25,16 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## BackEnd
+
+Run on port 3000, 
+commnad npm start,
+MongoDB run on port 27017
+'Employee' DB name
+'employeedetails' is collection name
+
+Requirement
+-> angular cli
+-> node
+-> mongodb install with collection and documnet
