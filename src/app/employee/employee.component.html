@@ -1,0 +1,119 @@
+<div class="container-fluid mt-40">
+    <div class='row'>
+        <div class='col-sm-6'>
+            <form [formGroup]="empForm" (ngSubmit)="empSubmit()">
+                <div class="form-group">
+                    <input type="text" name="name" formControlName="name" id="name" class="form-control"
+                        placeholder="Enter Employee Name *" required autofocus>
+                </div>
+                <div class='form-group'>
+                    <ng-multiselect-dropdown [placeholder]="'Add employee skills *'" [data]="dropdownList"
+                        formControlName="skills" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class='form-group'>
+                    <!-- <select class="custom-select" (change)="changeRating($event)" formControlName="rating">
+                        <option value="" disabled>Choose your Rating*</option>
+                        <option *ngFor="let rate of Rating" [ngValue]="rate">{{rate}}</option>
+                    </select> -->
+                    <ng-multiselect-dropdown [placeholder]="'Choose your Rating *'" [data]="dropdownListRating"
+                    formControlName="rating" [settings]="dropdownRatingSettings" (onSelect)="onItemSelect2($event)"
+                    (onSelectAll)="onSelectAll2($event)">
+                </ng-multiselect-dropdown>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Enter Notes *" formControlName="notes" row="5"
+                        col="5"></textarea>
+                </div>
+                <div class="form-group text-center">
+                    <span class='error' *ngIf='error'>{{errorMessage}} </span>
+                </div>
+                <div class="text-center pt-2 pb-1">
+                    <button type="submit" [disabled]='!empForm.valid || error' class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class='col-sm-6'>
+            <div class='col-6'>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Update Date</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='empList.length>0'>
+                            <tr *ngFor='let data of empList'>
+                                <td> {{data.name}}</td>
+                                <td><a href="" (click)='empDetails(data)' data-toggle="modal" data-target="#myModal">
+                                        {{data.createdAt}}</a></td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf='empList.length ==0'>
+                            <tr class='text-center'>
+                                <td>No Record found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--update model-->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update UserDetails</h4>
+                <button type="button" class="close" (click)="hideModal()">&times;</button>
+            </div>
+
+            <div *ngIf='newresult'>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Update Date</th>
+                            <th>notes</th>
+                            <th>skills</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let data of newresult'>
+                            <td> {{data.name}}</td>
+                            <td> {{data.createdAt}}</td>
+                            <td> {{data.notes}}</td>
+                            <td>
+                                <div *ngFor='let skills of data.skills'>
+                                    {{skills.item_text}}
+                                    <!-- <input readonly="readonly" [(ngModel)]="skills.item_text" type="text" /> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngFor='let rating of data.rating'>
+                                    {{rating.item_text}}
+                                   
+                                </div>
+                            </td>
+                            <!-- <td> {{data.rating}}</td> -->
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="hideModal()">Close</button>
+                    <!-- this button is hidden, used to close from typescript -->
+                    <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
